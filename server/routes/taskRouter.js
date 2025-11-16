@@ -22,11 +22,16 @@ router.get("/dashboard", protectRoute, dashboardStatistics);
 router.get("/", protectRoute, getTasks);
 router.get("/:id", protectRoute, getTask);
 
-router.put("/create-subtask/:id",protectRoute , isAdminRoute , createSubTask);
-router.put("/update/:id",protectRoute,isAdminRoute, updateTask);
-router.put("/:id" , protectRoute, isAdminRoute , trashTask);
+router.put("/create-subtask/:id", protectRoute, isAdminRoute, createSubTask);
+router.put("/update/:id", protectRoute, isAdminRoute, updateTask);
+router.put("/:id", protectRoute, isAdminRoute, trashTask);
 
-router.delete("/delete-restore/:id?",protectRoute,isAdminRoute,deleteRestoreTask);
-
+router.delete(
+  "/delete-restore/:id",
+  protectRoute,
+  isAdminRoute,
+  deleteRestoreTask
+);
+router.delete("/delete-restore", protectRoute, isAdminRoute, deleteRestoreTask);
 
 export default router;
