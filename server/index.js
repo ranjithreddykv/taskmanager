@@ -19,14 +19,15 @@ const PORT= process.env.PORT ||5000
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cors({
     origin : ["http://localhost:3000","http://localhost:5173"] ,
     methods : ["GET","POST","PUT","DELETE"],
     credentials : true
 }))
 
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
 
 app.use(cookieParser());
 app.use(morgan("dev"));
@@ -36,4 +37,9 @@ app.use("/api/v1",routes);
 app.use(routeNotFound);
 app.use(errorHandler);
 
-app.listen(PORT,()=>console.log(`Server is listening on ${PORT}`))
+
+export default app;
+
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT,()=>console.log(`Server is listening on ${PORT}`))
+}
