@@ -37,7 +37,6 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email,password);
     const user = await User.findOne({ email });
     if (!user) {
       return res
@@ -96,7 +95,9 @@ export const getNotificationList = async (req, res) => {
 export const updateUserProfile = async (req, res) => {
   try {
     const { userId, isAdmin } = req.user;
-    const { _id } = req.body;
+    console.log(req.params);
+    const { _id} = req.params;
+    
     const id =
       isAdmin && userId === _id
         ? userId
@@ -169,7 +170,7 @@ export const activateUserProfile = async (req, res) => {
 
     const user = await User.findById(id);
     if(user){
-      user.isActive = req.body.isActive;
+      user.isActive = !user.isActive;
       await user.save();
       res.status(201).json({
         status:true,

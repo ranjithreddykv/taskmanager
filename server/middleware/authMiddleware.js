@@ -5,11 +5,11 @@ const protectRoute = async (req, res, next) => {
     let token = req.cookies.token;
     if (token) {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-      const resp = await User.findById(decodedToken.userId).select(
+      const resp = await User.findById(decodedToken.userid).select(
         "isAdmin email"
       );
       req.user = {
-        email: resp.email,
+        email: resp?.email,
         isAdmin: resp.isAdmin,
         userId: decodedToken.userId,
       };
